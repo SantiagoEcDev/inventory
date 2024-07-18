@@ -1,0 +1,31 @@
+.header-products{
+    display: flex;
+    justify-content: space-between;
+}
+.add-product-button{
+    background: #18181B;
+    color: white;
+    font-size: 20px;
+    padding: 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 500;
+}
+.add-product-button:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+.products-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+    gap: 20px;
+    justify-items: center; 
+    align-items: center; 
+    margin: 20px 0;
+    overflow-y: auto; 
+  }
+  
+  .products-container > * {
+    width: 100%;
+    max-width: 300px; 
+  }
+  

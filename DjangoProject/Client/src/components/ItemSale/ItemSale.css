@@ -1,0 +1,37 @@
+.item-sale{
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1); 
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+.item-sale-title{
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+.item-sale-description{
+    color: black;
+    margin-bottom: 20px;
+}
+.footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.footer-price{
+    font-weight: bold;
+}
+.footer-button{
+    background: #18181b;
+    color: white;
+    padding: 10px;
+    border-radius: 10px ;
+    border: none;
+}
+.footer-button:hover{
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    cursor: pointer;
+}

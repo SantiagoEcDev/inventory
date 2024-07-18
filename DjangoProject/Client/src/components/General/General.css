@@ -1,0 +1,54 @@
+.products-title {
+    font-size: 30px;
+    margin: 50px 0 10px 0;
+  }
+  
+  .table-wrapper {
+    max-height: 400px; /* Altura máxima deseada para mostrar el scroll */
+    overflow-y: auto; /* Añade scroll vertical cuando la tabla excede la altura máxima */
+    padding: 10px; /* Espacio interno dentro del contenedor */
+  }
+  
+  .styled-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .styled-table th,
+  .styled-table td {
+    border: 1px solid #dddddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .styled-table tbody tr {
+    background-color: white;
+  }
+  
+  .styled-table th {
+    background-color: #f4f4f5;
+    color: #717785;
+  }
+  
+  .edit-button button,
+  .delete-button button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    border: 1px solid rgb(177, 176, 176);
+  }
+  
+  .edit-button button:hover,
+  .delete-button button:hover {
+    background-color: #f6f7f7;
+  }
+  
