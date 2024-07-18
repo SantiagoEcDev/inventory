@@ -5,9 +5,8 @@ import { useProducts } from "../../Hooks/useProducts";
 import { toast } from "react-hot-toast";
 import { updateStock } from "../../api/inventory.api";
 
-export const Sales = () => {
+export const Sales = ({ setSoldProducts }) => {
   const [products, setProducts] = useState([]);
-  const [soldProducts, setSoldProducts] = useState([]); // Estado para productos vendidos
   const productsData = useProducts();
 
   useEffect(() => {
@@ -57,7 +56,7 @@ export const Sales = () => {
   return (
     <div className="sales-container">
       {products.length === 0 ? (
-        <img src="" alt="" />
+        <h1>Nada disponible para venta</h1>
       ) : (
         products
           .filter((product) => product.stock > 0)
