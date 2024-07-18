@@ -13,7 +13,7 @@ export const Inventory = () => {
   // Función para manejar el cambio de cantidad
   const handleQuantityChange = (index, event) => {
     const updatedProducts = [...products];
-    updatedProducts[index].stock = parseInt(event.target.value) || 0; // Asegura que el valor sea un número entero
+    updatedProducts[index].stock = parseInt(event.target.value) || 0; 
     setProducts(updatedProducts);
   };
 

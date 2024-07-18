@@ -17,3 +17,14 @@ export const deleteProduct = async (key) => {
     throw error;
   }
 };
+
+export const updateStock = async (productId, newStock) => {
+  try {
+    const response = await inventoryApi.patch(`/${productId}/`, {
+      stock: newStock,
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

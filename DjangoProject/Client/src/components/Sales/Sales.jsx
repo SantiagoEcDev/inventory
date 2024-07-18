@@ -1,46 +1,63 @@
+import React, { useState, useEffect } from "react";
 import { ItemSale } from "../ItemSale/ItemSale";
 import "./Sales.css";
+import { useProducts } from "../../Hooks/useProducts";
+import { toast } from "react-hot-toast";
+import { updateStock } from "../../api/inventory.api"// Asegúrate de importar la función correcta
 
 export const Sales = () => {
+  const [products, setProducts] = useState([]);
+  const productsData = useProducts();
+
+  useEffect(() => {
+    setProducts(productsData);
+  }, [productsData]);
+
+  const handleSell = async (id, currentStock) => {
+    if (currentStock > 0) {
+      const newStock = currentStock - 1;
+
+      try {
+        const result = await updateStock(id, newStock);
+        if (result) {
+          setProducts((prevProducts) =>
+            prevProducts
+              .map((product) =>
+                product.id === id
+                  ? { ...product, stock: newStock }
+                  : product
+              )
+              .filter((product) => product.stock > 0) 
+          );
+          toast.success('Unidad vendida correctamente');
+        } else {
+          toast.error('Error al actualizar el producto');
+        }
+      } catch (error) {
+        console.error('Error updating stock:', error);
+        toast.error('Error al actualizar el producto');
+      }
+    } else {
+      toast.warn('No hay más stock disponible');
+    }
+  };
+
   return (
     <div className="sales-container">
-      <ItemSale
-        title="Camiseta de algodón"
-        description="Suave y cómoda, ideal para el verano"
-        price="$19.99"
-        available="Disponible 8 unidades"
-      />
-      <ItemSale
-        title="Pantalones deportivos"
-        description="Con tecnología de secado rápido"
-        price="$29.99"
-        available="Disponible 12 unidades"
-      />
-      <ItemSale
-        title="Zapatos deportivos"
-        description="Ligeros y resistentes"
-        price="$39.99"
-        available="Disponible 5 pares"
-      />
-      <ItemSale
-        title="Gorra ajustable"
-        description="Estilo casual, varios colores disponibles"
-        price="$9.99"
-        available="Disponible 20 unidades"
-      />
-      <ItemSale
-        title="Camisa de manga larga"
-        description="Material cómodo, ideal para todas las estaciones"
-        price="$29.99"
-        available="Disponible 15 unidades"
-      />
-
-      <ItemSale
-        title="Pantalones vaqueros slim fit"
-        description="Diseño moderno, ajuste perfecto"
-        price="$39.99"
-        available="Disponible 10 unidades"
-      />
+      {products
+      .filter((product) => product.stock > 0)
+        .slice(0)
+        .reverse()
+        .map((product) => (
+          <ItemSale
+            key={product.id}
+            title={product.name}
+            description={product.description}
+            price={product.price}
+            stock={`Unidades disponible ${product.stock}`}
+            onSell={() => handleSell(product.id, product.stock)}
+          />
+        ))}
     </div>
   );
 };
