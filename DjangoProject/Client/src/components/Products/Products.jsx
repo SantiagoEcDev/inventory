@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Products.css";
 import { ProductCard } from "../ProductCard/ProductCard";
 import Modal from "../Modal/Modal";
+import {toast} from "react-hot-toast"
 
 import { useProducts } from "../../Hooks/useProducts";
 
@@ -17,6 +18,7 @@ export const Products = () => {
     setModalOpen(false);
   };
 
+
   return (
     <>
       <header className="header-products">
@@ -26,18 +28,20 @@ export const Products = () => {
         </a>
       </header>
       <div className="products-container">
-        {products.slice(0).reverse().map((product) => (
-  <ProductCard
-    key={product.id}
-    id={product.id}
-    image={product.image}
-    name={product.name}
-    description={product.description}
-    price={product.price}
-    stock={`${product.stock} / Stock`}
-  />
-))}
-
+        {products
+          .slice(0)
+          .reverse()
+          .map((product) => (
+            <ProductCard
+              key={product.id}
+              id={product.id}
+              image={product.image}
+              name={product.name}
+              description={product.description}
+              price={product.price}
+              stock={`${product.stock} / Stock`}
+            />
+          ))}
       </div>
 
       <Modal isOpen={modalOpen} onClose={closeModal} />

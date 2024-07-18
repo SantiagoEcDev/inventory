@@ -1,43 +1,53 @@
-import React, { useState } from 'react';
-import './Modal.css'; // Archivo de estilos para el modal
-import { addProduct } from '../../api/inventory.api';
-import {useNavigate} from 'react-router-dom'
+import React, { useState } from "react";
+import "./Modal.css"; // Archivo de estilos para el modal
+import { addProduct } from "../../api/inventory.api";
+import { useNavigate } from "react-router-dom";
+import {toast} from "react-hot-toast"
 const Modal = ({ isOpen, onClose }) => {
   const initialFormData = {
-    name: '',
-    description: '',
-    price: '',
-    stock: ''
+    name: "",
+    description: "",
+    price: "",
+    stock: "",
   };
 
   const [formData, setFormData] = useState(initialFormData);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
   
-  try {
-    const res = await addProduct(formData);
-    onClose(); 
-    setFormData(initialFormData); 
-    navigate(0)
-  } catch (error) {
-    console.error("Error al enviar el formulario:", error);
-  }
-};
+    toast.promise(
+      addProduct(formData),
+      {
+        loading: 'Añadiendo...',
+        success: <b>Producto añadido</b>,
+        error: <b>Por favor, ingresa valores válidos</b>
+      }
+    );
+  
+    try {
+      await addProduct(formData);
+      onClose();
+      setFormData(initialFormData);
+      setTimeout(() => navigate(0), 1500);
+    } catch (error) {
+      
+    }
+  };
 
 
   const handleClose = () => {
     onClose(); // Cierra el modal
-    setFormData(initialFormData); 
+    setFormData(initialFormData);
   };
 
   return (
@@ -45,7 +55,9 @@ const Modal = ({ isOpen, onClose }) => {
       {isOpen && (
         <div className="modal-overlay">
           <div className="modal">
-            <button className="close-button" onClick={handleClose}>Cerrar</button>
+            <button className="close-button" onClick={handleClose}>
+              Cerrar
+            </button>
             <h2>Añadir al inventario</h2>
             <form onSubmit={handleSubmit}>
               <div className="form-group">
@@ -56,7 +68,7 @@ const Modal = ({ isOpen, onClose }) => {
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
-                  placeholder='Nombre'
+                  placeholder="Nombre"
                   required
                 />
               </div>
@@ -68,7 +80,7 @@ const Modal = ({ isOpen, onClose }) => {
                   name="description"
                   value={formData.description}
                   onChange={handleInputChange}
-                  placeholder='Descripción'
+                  placeholder="Descripción"
                   required
                 />
               </div>
@@ -80,7 +92,7 @@ const Modal = ({ isOpen, onClose }) => {
                   name="price"
                   value={formData.price}
                   onChange={handleInputChange}
-                  placeholder='Precio'
+                  placeholder="Precio"
                   required
                 />
               </div>
@@ -92,7 +104,7 @@ const Modal = ({ isOpen, onClose }) => {
                   name="stock"
                   value={formData.stock}
                   onChange={handleInputChange}
-                  placeholder='Cantidad'
+                  placeholder="Cantidad"
                   required
                 />
               </div>
