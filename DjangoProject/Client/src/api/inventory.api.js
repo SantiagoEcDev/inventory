@@ -17,7 +17,7 @@ export const deleteProduct = async (key) => {
     throw error;
   }
 };
-
+export const updateProduct = (id, product) => inventoryApi.put(`/${id}/`, product);
 export const updateStock = async (productId, newStock) => {
   try {
     const response = await inventoryApi.patch(`/${productId}/`, {

@@ -3,10 +3,11 @@ import { ItemSale } from "../ItemSale/ItemSale";
 import "./Sales.css";
 import { useProducts } from "../../Hooks/useProducts";
 import { toast } from "react-hot-toast";
-import { updateStock } from "../../api/inventory.api"// Asegúrate de importar la función correcta
+import { updateStock } from "../../api/inventory.api";
 
 export const Sales = () => {
   const [products, setProducts] = useState([]);
+  const [soldProducts, setSoldProducts] = useState([]); // Estado para productos vendidos
   const productsData = useProducts();
 
   useEffect(() => {
@@ -24,11 +25,22 @@ export const Sales = () => {
             prevProducts
               .map((product) =>
                 product.id === id
-                  ? { ...product, stock: newStock }
+                  ? { ...product, stock: newStock, sold: true } // Marca el producto como vendido
                   : product
               )
               .filter((product) => product.stock > 0) 
           );
+
+          // Actualiza el estado de productos vendidos
+          setSoldProducts((prevSoldProducts) =>
+            prevSoldProducts.some((product) => product.id === id)
+              ? prevSoldProducts // Si el producto ya está en la lista de vendidos, no lo añade de nuevo
+              : [
+                  ...prevSoldProducts,
+                  { ...products.find((product) => product.id === id), stock: newStock, sold: true }
+                ]
+          );
+
           toast.success('Unidad vendida correctamente');
         } else {
           toast.error('Error al actualizar el producto');
@@ -44,20 +56,24 @@ export const Sales = () => {
 
   return (
     <div className="sales-container">
-      {products
-      .filter((product) => product.stock > 0)
-        .slice(0)
-        .reverse()
-        .map((product) => (
-          <ItemSale
-            key={product.id}
-            title={product.name}
-            description={product.description}
-            price={product.price}
-            stock={`Unidades disponible ${product.stock}`}
-            onSell={() => handleSell(product.id, product.stock)}
-          />
-        ))}
+      {products.length === 0 ? (
+        <img src="" alt="" />
+      ) : (
+        products
+          .filter((product) => product.stock > 0)
+          .slice(0)
+          .reverse()
+          .map((product) => (
+            <ItemSale
+              key={product.id}
+              title={product.name}
+              description={product.description}
+              price={product.price}
+              stock={`Unidades disponible ${product.stock}`}
+              onSell={() => handleSell(product.id, product.stock)}
+            />
+          ))
+      )}
     </div>
   );
 };

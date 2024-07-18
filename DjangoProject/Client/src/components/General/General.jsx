@@ -20,39 +20,21 @@ export const General = () => {
             </tr>
           </thead>
           <tbody>
-            {products.map((product) => (
-              <tr key={product.id}>
-                <td>{product.name}</td>
-                <td>{product.description}</td>
-                <td>{product.price}</td>
-                <td>{product.stock}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      <h1 className="products-title">Historial de ventas</h1>
-      <div className="table-wrapper">
-        <table className="styled-table">
-          <thead>
-            <tr>
-              <th>Nombre del producto</th>
-              <th>Precio Unitario</th>
-            </tr>
-          </thead>
-          <tbody>
             {products
-              .filter((product) => product.sold)
+              .filter((product) => product.stock > 0)
               .map((product) => (
                 <tr key={product.id}>
                   <td>{product.name}</td>
+                  <td>{product.description}</td>
                   <td>{product.price}</td>
+                  <td>{product.stock}</td>
                 </tr>
               ))}
           </tbody>
         </table>
       </div>
+
+      
     </>
   );
 };

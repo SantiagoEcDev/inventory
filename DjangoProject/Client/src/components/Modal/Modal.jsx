@@ -2,48 +2,57 @@ import React, { useState } from "react";
 import "./Modal.css"; // Archivo de estilos para el modal
 import { addProduct } from "../../api/inventory.api";
 import { useNavigate } from "react-router-dom";
-import {toast} from "react-hot-toast"
+import { toast } from "react-hot-toast";
+
 const Modal = ({ isOpen, onClose }) => {
   const initialFormData = {
     name: "",
     description: "",
     price: "",
     stock: "",
+    image: null, // Cambiado para manejar archivos
   };
 
   const [formData, setFormData] = useState(initialFormData);
-
   const navigate = useNavigate();
+
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, files } = e.target;
     setFormData({
       ...formData,
-      [name]: value,
+      [name]: files ? files[0] : value, // Manejar archivos si se seleccionan
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    toast.promise(
-      addProduct(formData),
-      {
-        loading: 'Añadiendo...',
-        success: <b>Producto añadido</b>,
-        error: <b>Por favor, ingresa valores válidos</b>
-      }
-    );
-  
+
+    const formDataToSend = new FormData();
+    formDataToSend.append("name", formData.name);
+    formDataToSend.append("description", formData.description);
+    formDataToSend.append("price", formData.price);
+    formDataToSend.append("stock", formData.stock);
+    if (formData.image) {
+      formDataToSend.append("image", formData.image); // Añadir archivo de imagen
+    }
+
     try {
-      await addProduct(formData);
+      await toast.promise(
+        addProduct(formDataToSend),
+        {
+          loading: 'Añadiendo...',
+          success: <b>Producto añadido</b>,
+          error: <b>Por favor, ingresa valores válidos</b>
+        }
+      );
+
       onClose();
       setFormData(initialFormData);
       setTimeout(() => navigate(0), 1500);
     } catch (error) {
-      
+      console.error("Error al agregar el producto:", error);
     }
   };
-
 
   const handleClose = () => {
     onClose(); // Cierra el modal
@@ -108,6 +117,7 @@ const Modal = ({ isOpen, onClose }) => {
                   required
                 />
               </div>
+              
               <button type="submit">Enviar</button>
             </form>
           </div>

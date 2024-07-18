@@ -4,6 +4,29 @@
     gap: 20px;
     padding: 20px;
   }
+  .sales-container-no-sales {
+    display: flex;                /* Usar flexbox para alinear el contenido */
+    flex-direction: column;       /* Alinear los elementos en columna */
+    align-items: center;          /* Centrar horizontalmente */
+    justify-content: center;      /* Centrar verticalmente */
+    height: 70vh;                /* Ocupar toda la altura del viewport */
+    width: 70vw;                 /* Ocupar toda la anchura del viewport */
+    text-align: center;           /* Centrar el texto */
+    gap: 80px;
+  }
+  
+  .sales-container-no-sales h1 {
+    font-size: 2rem;              /* Tamaño del texto del título */
+    margin-bottom: 1rem;          /* Espacio debajo del título */
+  }
+  
+  .sales-container-no-sales img {
+    max-width: 100%;              /* Ajustar el tamaño máximo de la imagen */
+    height: auto;                 /* Mantener la proporción de la imagen */
+    max-height: 400px;            /* Limitar la altura máxima de la imagen */
+    margin-top: 1rem;             /* Espacio arriba de la imagen */
+  }
+  
   
   @media (max-width: 1200px) {
     .sales-container {
