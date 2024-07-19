@@ -3,9 +3,9 @@ import { deleteProduct } from "../../api/inventory.api";
 import { useNavigate } from "react-router-dom";
 import "./ProductCard.css";
 import { toast } from "react-hot-toast";
-import {EditModal} from "../EditModal/EditModal"; // Asegúrate de que la ruta es correcta
+import {EditModal} from "../EditModal/EditModal"; 
 
-export const ProductCard = ({ id, image, name, description, price, stock }) => {
+export const ProductCard = ({ id,name, description, price, stock }) => {
   const navigate = useNavigate();
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [editedProduct, setEditedProduct] = useState({
