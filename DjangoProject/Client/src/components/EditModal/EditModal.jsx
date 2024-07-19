@@ -1,4 +1,3 @@
-// src/components/EditModal/EditModal.jsx
 import React, { useState, useEffect } from 'react';
 import './EditModal.css';
 import { updateProduct } from '../../api/inventory.api'; // Asegúrate de que esta importación sea correcta
@@ -38,7 +37,7 @@ export const EditModal = ({ isOpen, onClose, product, onUpdate }) => {
       onClose(); // Cierra el modal
     } catch (error) {
       console.error("Error updating product:", error);
-      // Manejo de errores
+      toast.error("Error al actualizar el producto"); // Muestra el toast de error
     }
   };
 
@@ -47,7 +46,7 @@ export const EditModal = ({ isOpen, onClose, product, onUpdate }) => {
       <div className="edit-modal-overlay">
         <div className="edit-modal-content">
           <button className="close-button" onClick={onClose}>
-            X
+            Cerrar
           </button>
           <h2>Editar Producto</h2>
           <form onSubmit={handleSubmit}>
@@ -106,3 +105,5 @@ export const EditModal = ({ isOpen, onClose, product, onUpdate }) => {
     )
   );
 };
+
+export default EditModal;

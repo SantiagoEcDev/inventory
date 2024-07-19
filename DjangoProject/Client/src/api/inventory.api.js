@@ -28,3 +28,4 @@ export const updateStock = async (productId, newStock) => {
     throw error;
   }
 };
+
