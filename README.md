@@ -14,7 +14,7 @@ Antes de comenzar, asegúrate de tener instalados los siguientes requisitos en t
 
 Para clonar este repositorio, abre una terminal y ejecuta el siguiente comando:
 
-git clone (https://github.com/SantiagoEcDev/inventory-app.git)
+git clone (https://github.com/SantiagoEcDev/inventory.git)
 
 ## Entrar a la carpeta frontend
 Para entrar a la carpeta del cliente ejecuta el siguiente comando:
